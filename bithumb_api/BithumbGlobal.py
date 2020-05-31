@@ -163,7 +163,7 @@ class BithumbGlobalRestAPI:
         return result
 
 
-    def orders(self, side=None, queryRange='thisweek', coinType=None, marketType=None, status=None, page=1, count=10):
+    def orders(self, side=None, queryRange='thisweek', symbol=None, status=None, page=1, count=10):
         parms = {
             'page': str(page),
             'count': str(count)
@@ -172,10 +172,8 @@ class BithumbGlobalRestAPI:
         if side:
             assert side in ('buy', 'sell')
             parms['side'] = side
-        if coinType:
-            parms['coinType'] = coinType
-        if marketType:
-            parms['marketType'] = marketType
+        if symbol:
+            parms['symbol'] = symbol
         if status:
             assert status in ('traded', 'trading')
             parms['status'] = status

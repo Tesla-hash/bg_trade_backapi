@@ -75,9 +75,41 @@ def get_user_balance():
 
     result = get_balance()
 
-    return jsonify(btc=result[0],btc_frozen=result[1], eth = result[3], eth_frozen = result[4])
+    return jsonify(btc=result[0],btc_frozen=result[1], eth = result[2], eth_frozen = result[3], usdt = result[4], usdt_frozen = result[5], bip = result[6], bip_frozen = result[7])
+
+@app.route('/orders/<string:symbol>',methods=['GET'])
+def get_user_orders(symbol):
+
+    result = get_orders(symbol)
+
+    return jsonify(result)
+
+@app.route('/order/<string:order_id>', methods = ['GET'])
+def get_user_order_detailes(order_id):
+
+    result = get_order_detail(order_id)
+
+    return jsonify(result)
+
+@app.route('/cancel/<string:order_id>', methods = ['GET'])
+def cancel_user_order(order_id):
+
+    cancel_order(order_id)
+
+    return jsonify(status = str(order_id) + ':canceled')
 
 
+@app.route('/allorders/<string:symbol>', methods = ['GET'])
+def get_all_user_orders(symbol):
+    result = get_all_orders(symbol)
+
+    return jsonify(result)
+
+@app.route('/history', methods = ['GET'])
+def get_user_history_orders():
+    result = get_history_orders()
+
+    return jsonify(result)
 
 
 if __name__ == '__main__':
