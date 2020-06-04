@@ -111,6 +111,26 @@ def get_user_history_orders():
 
     return jsonify(result)
 
+@app.route('/check/<string:chat_id>', methods = ['GET'])
+def check_user(chat_id):
+    try:
+        conn = mysql.connect()
+        mycursor = conn.cursor()
+        sql = "SELECT chat_id FROM users WHERE chat_id = "+str(chat_id)
+        mycursor.execute(sql)
+        result = mycursor.fetchone()
+        if result == None:
+            return jsonify('User does not exist')
+        else:
+            return jsonify(result)
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        mycursor.close()
+        conn.close()
+
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0')
